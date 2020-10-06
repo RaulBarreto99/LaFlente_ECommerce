@@ -27,6 +27,36 @@ public class Controller {
 		ModelAndView mv = new ModelAndView("produtos.html");
 		return mv;
 	}
+	@RequestMapping("/carrinho")
+	@GetMapping
+	public ModelAndView carrinho() {
+		ModelAndView mv = new ModelAndView("carrinho.html");
+		return mv;
+	}
+	@RequestMapping("/login")
+	@GetMapping
+	public ModelAndView login() {
+		ModelAndView mv = new ModelAndView("login.html");
+		return mv;
+	}
+	@RequestMapping("/contato")
+	@GetMapping
+	public ModelAndView contato() {
+		ModelAndView mv = new ModelAndView("contato.html");
+		return mv;
+	}
+	@RequestMapping("/compra")
+	@GetMapping
+	public ModelAndView compra() {
+		ModelAndView mv = new ModelAndView("compra.html");
+		return mv;
+	}
+	@RequestMapping("/sucesso")
+	@GetMapping
+	public ModelAndView sucesso() {
+		ModelAndView mv = new ModelAndView("sucesso.html");
+		return mv;
+	}
 	
 	
 }
