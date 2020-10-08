@@ -15,12 +15,14 @@ public class Controller {
 		return mv;
 	}
 	
-	@RequestMapping("/detalharProduto")
+	@RequestMapping("/detalharProduto/{codigo}")
 	@GetMapping
-	public ModelAndView detalharProduto() {
+	public ModelAndView detalharProduto(@PathVariable Long codigo) {
 		ModelAndView mv = new ModelAndView("detalharProduto.html");
+		mv.addObject("codigo", codigo);
 		return mv;
 	}
+	
 	@RequestMapping("/produto")
 	@GetMapping
 	public ModelAndView produto() {
