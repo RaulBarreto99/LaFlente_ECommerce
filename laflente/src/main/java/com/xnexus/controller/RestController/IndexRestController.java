@@ -24,7 +24,7 @@ public class IndexRestController {
 	
 	@GetMapping
 	public ResponseEntity<List<Produto>> listarProdutos() {
-		List<Produto> produtos = produtoRepository.findAll();
+		List<Produto> produtos = produtoRepository.findByStatus("ATIVO");
 
 		return ResponseEntity.ok(produtos);
 	}
