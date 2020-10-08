@@ -10,9 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Produto implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -33,10 +35,14 @@ public class Produto implements Serializable {
 
 	private double preco;
 
-	private String imagem;
-	
+	@OneToMany
+	private List<Imagem> imagens;
+
 	private String status;
 
+	
+	@OneToMany(cascade= CascadeType.ALL)
+	private List<PerguntaResposta> perguntaResposta;
 	
 
 	public long getCodigo() {
@@ -95,13 +101,6 @@ public class Produto implements Serializable {
 		this.preco = preco;
 	}
 
-	public String getImagem() {
-		return imagem;
-	}
-
-	public void setImagem(String imagem) {
-		this.imagem = imagem;
-	}
 	public String getStatus() {
 		return status;
 	}
@@ -109,4 +108,26 @@ public class Produto implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	public List<PerguntaResposta> getPerguntaResposta() {
+		return perguntaResposta;
+	}
+
+	public void setPerguntaResposta(List<PerguntaResposta> perguntaResposta) {
+		this.perguntaResposta = perguntaResposta;
+	}
+	
+	public List<Imagem> getImagem() {
+		return imagens;
+	}
+
+	public void setImagem(List<Imagem> imagem) {
+		this.imagens = imagem;
+	}
+
+	public void addImagem(Imagem imagem){
+		imagens.add(imagem);
+	}
+	
+	
 }
