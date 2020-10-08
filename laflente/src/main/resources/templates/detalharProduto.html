@@ -155,6 +155,9 @@
 					aria-labelledby="home-tab">
 					<h4>Descrição Detalhada</h4>
 					<p id="descricaoDetalhada"></p>
+					<br>
+					<h4>Perguntas e Respostas</h4>
+					<div id="perguntaRespostas"></div>
 					
 				</div>
 			
@@ -339,6 +342,16 @@
 		layoutImagens(produto.imagem);
 		document.getElementById("descricaoDetalhada").textContent = produto.descricaoDetalhada
 		recomendacoes();
+		layoutPerguntas(produto.perguntaResposta)
+	}
+	
+	function layoutPerguntas(perguntas){
+let perguntasRepostas = document.getElementById("perguntaRespostas");
+		
+		for(let i = 0; i < perguntas.length; i++){
+			perguntasRepostas.insertAdjacentHTML('beforeend', `<li>Pergunta: ${perguntas[i].pergunta}</li><ul><li>Resposta: ${perguntas[i].resposta}</li></ul><br>`);
+
+		}
 	}
 	
 	
