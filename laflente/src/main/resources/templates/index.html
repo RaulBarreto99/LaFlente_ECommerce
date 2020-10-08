@@ -148,9 +148,9 @@
 	<!-- End category Area -->
 
 	<!-- start product Area -->
-	<section class="owl-carousel active-product-area section_gap">
+	
 		<!-- single product slide -->
-		<div class="single-product-slider">
+		<div class="single-product-slider mt-5">
 			<div class="container">
 				<div class="row justify-content-center">
 					<div class="col-lg-6 text-center">
@@ -175,7 +175,7 @@
 
 				let xhr = new XMLHttpRequest();
 
-				xhr.open('GET', "http://localhost:8080/index");
+				xhr.open('GET', "http://localhost:3000/index");
 
 				xhr.onreadystatechange = () => {
 
@@ -196,13 +196,13 @@
 			});
 		}
 		function atualizarCard() {
-			get("http://localhost:8080/index").then(produtos => {
+			get("http://localhost:3000/index").then(produtos => {
 				let card = document.getElementById("card");
 				card.innerHTML = "";
 				produtos.forEach(produto => {
 					card.insertAdjacentHTML('beforeend', `<div class="col-lg-3 col-md-6">
 							<div class="single-product">
-							<img class="img-fluid" src="${produto.imagem}"alt="">
+							<img class="img-fluid" src="data:image/${produto.imagem[0].extensao};base64,${produto.imagem[0].imagem}"alt="">
 							<div class="product-details">
 								<h6>${produto.nome}</h6>
 								<div class="price">
@@ -215,7 +215,7 @@
 										<p class="hover-text">Carrinho</p>
 									</a>
 					
-									<a href="/detalharProduto" class="social-info">
+									<a href="/detalharProduto/${produto.codigo}" class="social-info">
 										<span class="lnr lnr-move"></span>
 										<p class="hover-text">Detalhes</p>
 									</a>
