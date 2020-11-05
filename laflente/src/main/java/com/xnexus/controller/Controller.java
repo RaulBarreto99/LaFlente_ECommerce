@@ -48,6 +48,13 @@ public class Controller {
 		return mv;
 	}
 	
+	@RequestMapping("/editarConta")
+	@GetMapping
+	public ModelAndView editarConta() {
+		ModelAndView mv = new ModelAndView("editarConta.html");
+		return mv;
+	}
+	
 	@RequestMapping("/contato")
 	@GetMapping
 	public ModelAndView contato() {
