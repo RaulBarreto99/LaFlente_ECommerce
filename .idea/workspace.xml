@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="131f9eb7-3c16-498a-84db-857d6e01ddd1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/laflente/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/laflente/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laflente/src/main/java/com/xnexus/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/laflente/src/main/java/com/xnexus/controller/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laflente/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/laflente/src/main/resources/templates/login.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="1jrBk3ngJjDTvlol0yriiGNibua" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="131f9eb7-3c16-498a-84db-857d6e01ddd1" name="Default Changelist" comment="" />
+      <created>1604552469833</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1604552469833</updated>
+    </task>
+    <servers />
+  </component>
+</project>
