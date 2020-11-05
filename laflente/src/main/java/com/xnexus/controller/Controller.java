@@ -41,6 +41,13 @@ public class Controller {
 		ModelAndView mv = new ModelAndView("login.html");
 		return mv;
 	}
+	@RequestMapping("/criarConta")
+	@GetMapping
+	public ModelAndView criarConta() {
+		ModelAndView mv = new ModelAndView("criarConta.html");
+		return mv;
+	}
+	
 	@RequestMapping("/contato")
 	@GetMapping
 	public ModelAndView contato() {
