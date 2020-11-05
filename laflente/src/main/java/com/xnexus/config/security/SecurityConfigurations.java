@@ -32,6 +32,11 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter{
 		.antMatchers(HttpMethod.GET, "/login").permitAll()
 		.antMatchers(HttpMethod.POST, "/usuario").permitAll()
 		.antMatchers("/criarConta").permitAll()
+		.antMatchers("/").permitAll()
+		.antMatchers("/produto").permitAll()
+		.antMatchers("/carrinho").permitAll()
+		.antMatchers("/compra").permitAll()
+		.antMatchers("/detalharProduto").permitAll()
 		.anyRequest().authenticated()
 		.and().csrf().disable().formLogin();
 	}
