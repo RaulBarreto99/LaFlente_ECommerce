@@ -210,7 +210,7 @@
 								</div>
 								<div class="prd-bottom">
 
-									<a href="/carrinho" class="social-info">
+									<a onclick="adicionarAoCarrinho(${produto.codigo})"  class="social-info">
 										<span class="ti-bag"></span>
 										<p class="hover-text">Carrinho</p>
 									</a>
@@ -230,6 +230,57 @@
 			});
 		}
 			)
+		}
+		
+		function adicionarAoCarrinho(codigo){
+			event.preventDefault();
+
+			let item = {
+				codigoProduto: codigo,
+				quantidade: parseInt(1)
+			};
+
+			let carrinho = localStorage.getItem("carrinho");
+
+			if(carrinho){
+				carrinho = JSON.parse(carrinho);
+
+				for(let i = 0; i < carrinho.itens.length; i++){
+					if(carrinho.itens[i].codigoProduto == item.codigoProduto){
+						carrinho.itens[i].quantidade = parseInt(carrinho.itens[i].quantidade);
+
+						carrinho.itens[i].quantidade += parseInt(item.quantidade);
+						localStorage.setItem("carrinho", JSON.stringify(carrinho));
+						
+						let acao = document.getElementById("acao");
+						
+						window.location.replace("http://localhost:3000/carrinho");
+						
+						return;
+						
+					}
+				}
+
+					carrinho.itens.push(item);
+
+					localStorage.setItem("carrinho", JSON.stringify(carrinho));
+				
+				
+			}else{
+				let itens = [];
+
+				itens.push(item);
+
+				carrinho = {
+					itens: itens
+				}
+
+				localStorage.setItem("carrinho", JSON.stringify(carrinho));
+				
+				window.location.replace("http://localhost:3000/carrinho");
+			}
+			
+
 		}
 		</script>
 		<!-- single product slide -->

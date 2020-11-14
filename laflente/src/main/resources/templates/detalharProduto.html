@@ -114,7 +114,9 @@
 	<div class="product_image_area">
 		<div class="container">
 			<div class="row s_product_inner">
+			
 				<div class="col-lg-4">
+				
 					<div id="carouselExampleControls" class="carousel slide secondary"
 						data-ride="carousel">
 						<div class="carousel-inner" id="imagens"></div>
@@ -374,22 +376,79 @@ let perguntasRepostas = document.getElementById("perguntaRespostas");
 	}
 	
 	function layoutInformacoesPrincipais(produto){
-		return `<h3>${produto.nome}</h3>
+		
+		return `
+
+		<h3>${produto.nome}</h3>
 		<h2>${produto.preco}</h2>
 		
 		<p>${produto.descricaoCurta}</p>
 		<div class="product_count">
 			<label for="qty">Quantity:</label>
-			<input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty">
-			<button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+			<input type="text" name="qty" id="qtd" maxlength="12" value="1" title="Quantidade:" class="input-text qty">
+			<button onclick="var result = document.getElementById('qtd'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
 			 class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
-			<button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
+			<button onclick="var result = document.getElementById('qtd'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
 			 class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
 		</div>
 		<div class="card_area d-flex align-items-center">
-			<a class="primary-btn" href="/carrinho">Adicionar ao carrinho</a>
+		
+			<button class="primary-btn" onclick="adicionarAoCarrinho()">Adicionar ao carrinho</button>
 		
 		</div>`;
+	}
+
+	function adicionarAoCarrinho(){
+		event.preventDefault();
+
+		let qtd = document.getElementById("qtd").value;
+		
+		let item = {
+			codigoProduto: codigo,
+			quantidade: parseInt(qtd)
+		};
+
+		let carrinho = localStorage.getItem("carrinho");
+
+		if(carrinho){
+			carrinho = JSON.parse(carrinho);
+
+			for(let i = 0; i < carrinho.itens.length; i++){
+				if(carrinho.itens[i].codigoProduto == item.codigoProduto){
+					carrinho.itens[i].quantidade = parseInt(carrinho.itens[i].quantidade);
+
+					carrinho.itens[i].quantidade += parseInt(item.quantidade);
+					localStorage.setItem("carrinho", JSON.stringify(carrinho));
+					
+					let acao = document.getElementById("acao");
+					
+					window.location.replace("http://localhost:3000");
+					
+					return;
+					
+				}
+			}
+
+				carrinho.itens.push(item);
+
+				localStorage.setItem("carrinho", JSON.stringify(carrinho));
+			
+			
+		}else{
+			let itens = [];
+
+			itens.push(item);
+
+			carrinho = {
+				itens: itens
+			}
+
+			localStorage.setItem("carrinho", JSON.stringify(carrinho));
+			
+			window.location.replace("http://localhost:3000");
+		}
+		
+
 	}
 	
 	function recomendacoes(){
