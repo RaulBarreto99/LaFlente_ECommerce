@@ -5791,3 +5791,9 @@ label {
     color: #ffba00; }
 
 /*# sourceMappingURL=main.css.map */
+
+/* posicionamento select de parcelas */
+.nice-select {
+		float : right !important;
+		margin-right : 139px;
+	}
