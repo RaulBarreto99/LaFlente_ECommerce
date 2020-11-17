@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import br.com.caelum.stella.validation.CPFValidator;
+
 @EnableWebSecurity
 @Configuration
 public class SecurityConfigurations extends WebSecurityConfigurerAdapter{
@@ -29,20 +31,20 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-		.antMatchers(HttpMethod.GET, "/login").permitAll()
+		.antMatchers("/login").permitAll()
 		.antMatchers(HttpMethod.POST, "/usuario").permitAll()
 		.antMatchers("/criarConta").permitAll()
 		.antMatchers("/").permitAll()
 		.antMatchers("/produto").permitAll()
 		.antMatchers("/produto/**").permitAll()
 		.antMatchers("/index").permitAll()
-		.antMatchers("/carrinho").permitAll()
 		.antMatchers("/compra").permitAll()
 		.antMatchers("/detalharProduto/**").permitAll()
 		.antMatchers("/detalharProduto").permitAll()
 		.antMatchers("/carrinho-rest/**").permitAll()
 		.anyRequest().authenticated()
-		.and().csrf().disable().formLogin();
+		.and().csrf().disable()
+		.formLogin();
 	}
 	
 	//Configurações de recursos estáticos (js, css, imagens, etc.)

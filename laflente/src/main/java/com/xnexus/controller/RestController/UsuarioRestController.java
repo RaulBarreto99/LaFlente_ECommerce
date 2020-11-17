@@ -49,7 +49,7 @@ public class UsuarioRestController {
 		if(erros.size() > 0) {
 			return ResponseEntity.badRequest().body(erros);
 		}
-		
+				
 		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
 		usuario.setSenha(bcrypt.encode(usuario.getPassword()));
 		usuarioRepository.save(usuario);
@@ -57,6 +57,24 @@ public class UsuarioRestController {
 		return ResponseEntity.created(null).build();
 	}
 	
+	@Transactional
+	@PostMapping("/enderecos/{idUsuario}")
+	public ResponseEntity<?> cadastrarEndereco(@RequestBody Endereco endereco, @PathVariable long idUsuario){
+
+		endereco.setId(0);
+		enderecoRepository.save(endereco);
+		
+		Optional<UsuarioECommerce> optional = usuarioRepository.findById(idUsuario);
+		
+		if(optional.isPresent()) {
+			UsuarioECommerce usuario = optional.get();
+			
+			usuario.addEndereco(endereco);
+			usuarioRepository.flush();
+		}
+		
+		return ResponseEntity.created(null).build();
+	}
 	
 	@GetMapping
 	public ResponseEntity<?> getUsuario(){
@@ -106,6 +124,8 @@ public class UsuarioRestController {
 			usuarioBD.setTelefone(usuario.getTelefone());
 			usuarioBD.setSenha(bcrypt.encode(usuario.getPassword()));
 			usuarioBD.setEnderecos(usuarioBD.getEnderecos());
+			
+			usuarioRepository.flush();
 		}
 		
 		
@@ -115,16 +135,14 @@ public class UsuarioRestController {
 	
 	@DeleteMapping("/enderecos/{id}")
 	@Transactional
-	public ResponseEntity<?> removerPalavraChave(@PathVariable Long id) {
+	public ResponseEntity<?> removerEndereco(@PathVariable Long id) {
 
-		Optional<UsuarioECommerce> optional = usuarioRepository.findById(id);
+		Optional<Endereco> optional = enderecoRepository.findById(id);
 
 		if (optional.isPresent()) {
 			
-			for (Endereco endereco : optional.get().getEnderecos()) {
-				System.out.println(endereco.getId());
-				enderecoRepository.deleteById(endereco.getId());
-			}
+			enderecoRepository.delete(optional.get());
+			enderecoRepository.flush();
 			
 
 			return ResponseEntity.ok().build();
