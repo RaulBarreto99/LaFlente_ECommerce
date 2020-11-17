@@ -37,11 +37,13 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter{
 		.antMatchers("/").permitAll()
 		.antMatchers("/produto").permitAll()
 		.antMatchers("/produto/**").permitAll()
+		.antMatchers("/usuario/username").permitAll()
 		.antMatchers("/index").permitAll()
 		.antMatchers("/compra").permitAll()
 		.antMatchers("/detalharProduto/**").permitAll()
 		.antMatchers("/detalharProduto").permitAll()
 		.antMatchers("/carrinho-rest/**").permitAll()
+		.antMatchers("/carrinho").permitAll()
 		.anyRequest().authenticated()
 		.and().csrf().disable()
 		.formLogin();

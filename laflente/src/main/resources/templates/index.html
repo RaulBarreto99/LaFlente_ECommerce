@@ -61,9 +61,9 @@
 							
 							<li class="nav-item submenu dropdown">
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-								 aria-expanded="false">Login</a>
-								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+								 aria-expanded="false">Meu Perfil</a>
+								<ul class="dropdown-menu" id="menu_dinamico">
+									
 
 								</ul>
 							</li>
@@ -170,12 +170,28 @@
 			</div>
 		</div>
 		<script>
+		
+		
+		
+		get("http://localhost:3000/usuario/username").then(username => {
+			console.log(username)
+			if(username == "anonymousUser"){
+				document.getElementById("menu_dinamico").innerHTML = 
+					`<li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+					<li class="nav-item"><a class="nav-link" href="/criarConta"> Criar Conta</a></li>`
+			}else{
+				document.getElementById("menu_dinamico").innerHTML = 
+					`<li class="nav-item"><a class="nav-link" href="/editarConta">Editar Conta</a></li>
+					<li class="nav-item"><a class="nav-link" href="/pedidos"> Meus Pedidos</a></li>`
+			}
+		});
+		
 		function get(url) {
 			return new Promise((resolve, reject) => {
 
 				let xhr = new XMLHttpRequest();
 
-				xhr.open('GET', "http://localhost:3000/index");
+				xhr.open('GET', url);
 
 				xhr.onreadystatechange = () => {
 
@@ -183,7 +199,7 @@
 
 						if (xhr.status == 200) {
 
-							resolve(JSON.parse(xhr.responseText));
+							resolve(xhr.responseText);
 
 						} else {
 
@@ -195,8 +211,10 @@
 				xhr.send();
 			});
 		}
+		
 		function atualizarCard() {
 			get("http://localhost:3000/index").then(produtos => {
+				produtos = JSON.parse(produtos)
 				let card = document.getElementById("card");
 				card.innerHTML = "";
 				produtos.forEach(produto => {
@@ -231,6 +249,9 @@
 		}
 			)
 		}
+		
+		
+		
 		
 		function adicionarAoCarrinho(codigo){
 			event.preventDefault();
