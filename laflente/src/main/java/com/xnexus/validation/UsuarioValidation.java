@@ -47,18 +47,6 @@ public class UsuarioValidation {
 
 		String[] nomeSplit = usuario.getNome().split(" ");
 
-		boolean fiscal = false;
-
-		for (Endereco endereco : usuario.getEnderecos()) {
-			if (endereco.isFiscal()) {
-				fiscal = true;
-			}
-		}
-
-		if (!fiscal) {
-			erros.add("Se deve ter no minimo 1 endereço Fiscal.");
-		}
-
 		if (nomeSplit.length < 2) {
 			erros.add("O nome deve no minimo ter duas palavras");
 		}

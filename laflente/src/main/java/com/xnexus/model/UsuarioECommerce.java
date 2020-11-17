@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
@@ -34,7 +35,7 @@ public class UsuarioECommerce implements UserDetails{
 	private String telefone;
 	private String email;
 	
-	@ManyToMany(cascade  = {CascadeType.ALL}, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Endereco> enderecos;
 	
 	public long getId() {
@@ -78,6 +79,10 @@ public class UsuarioECommerce implements UserDetails{
 	}
 	public void setEnderecos(List<Endereco> enderecos) {
 		this.enderecos = enderecos;
+	}
+	
+	public void addEndereco(Endereco endereco) {
+		this.enderecos.add(endereco);
 	}
 	
 	@Override
