@@ -2,6 +2,7 @@
 <html lang="zxx" class="no-js">
 
 <head>
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <!-- Mobile Specific Meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicon-->
@@ -252,25 +253,74 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr class="out_button_area">
-                                <td>
-
-                                </td>
-                                <td>
-
-                                </td>
-                                <td>
-
-                                </td>
-                                <td>
-                                    <div class="checkout_btn_inner d-flex align-items-center">
-                                        <a class="gray_btn" href="/produtos">Continuar Comprando</a>
-                                        <a class="primary-btn" href="/compra">Prosseguir Compra</a>
-                                    </div>
-                                </td>
-                            </tr>
+                            
+                            
                         </tbody>
                     </table>
+                    
+                    <section class="product_description_area">
+    <div class="container">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item"><a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">Cartão de Crédito</a></li>
+            <li class="nav-item"><a class="nav-link active show" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="true">PayPal</a></li>
+
+        </ul>
+        
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <form>
+            <label class="labelCartao" style="margin-left: 10rem; margin-right: 1rem;">Numero do cartão</label><input class="NumeroCartao" type="text" maxlength="16" size="16" style="border-radius: 5px">
+            <label class="labelCartao" style="margin-left: 10rem; margin-right: 1rem;">Código verificador</label><input class="inputCartao" type="text" maxlength="3" size="1" style="border-radius: 5px">
+            
+          
+            <br>
+            
+            <div style="margin-top: 1rem;">
+            <label class="labelCartao" style="margin-left: 10rem; margin-right: 1rem;">Data de vencimento</label><input class="inputCartao" type="month" style="border-radius: 5px">
+            <label class="labelCartao" style="margin-left: 10rem; margin-right: 1rem;">Quantidade de parcelas</label>
+            
+			<!--CSS para posicionar corretamente foi colocado na classe main.css -->
+			<select name="example">
+			  <option value="1">1x</option>
+			  <option value="3">3x</option>
+			  <option value="6">6x</option>
+			  <option value="9">9x</option>
+			  <option value="12">12x</option>
+			</select>
+            </div>
+            
+            <div>
+            	<input type="checkbox" id="checkboxCredito" class="checkboxCredito" onclick="alterarCheckboxCredito()"><a>Selecionar forma de pagamento</a>
+            </div>
+            </form>
+            </div>
+        
+            <div class="tab-pane fade active show" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+				
+			<div id="smart-button-container">
+			    <div style="text-align: center;">
+			      <div id="paypal-button-container"></div>
+			    </div>
+			 </div>
+			 
+			 <div>
+            	<input type="checkbox" id="checkboxPaypal" class="checkboxPaypal" onclick="alterarCheckboxPaypal()"><a>Selecionar forma de pagamento</a>
+            </div>
+				
+            </div>
+            
+		</div>
+		</div>
+		</section>
+		
+		<div class="out_button_area">
+		    <div>
+		        <div class="checkout_btn_inner d-flex align-items-center">
+		            <a class="gray_btn" href="/produtos">Continuar Comprando</a>
+		            <a class="primary-btn" href="/compra">Prosseguir Compra</a>
+		        </div>
+		    </div>
+		</div>
                 </div>
             </div>
         </div>
@@ -374,6 +424,53 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
 	<script src="js/gmaps.min.js"></script>
 	<script src="js/main.js"></script>
+	
+	
+	<script src="https://www.paypal.com/sdk/js?client-id=sb&currency=BRL" data-sdk-integration-source="button-factory"></script>
+	<script>
+	
+	
+	
+	//função para chamar a pagina do paypal
+	  function initPayPalButton() {
+	    paypal.Buttons({
+	      style: {
+	        shape: 'rect',
+	        color: 'gold',
+	        layout: 'horizontal',
+	        label: 'paypal',
+	        
+	      },
+	
+	      createOrder: function(data, actions) {
+	        return actions.order.create({
+	          purchase_units: [{"amount":{"currency_code":"BRL","value":1}}]
+	        });
+	      },
+	
+	      onApprove: function(data, actions) {
+	        return actions.order.capture().then(function(details) {
+	          alert('Transaction completed by ' + details.payer.name.given_name + '!');
+	        });
+	      },
+	
+	      onError: function(err) {
+	        console.log(err);
+	      }
+	    }).render('#paypal-button-container');
+	  }
+	  initPayPalButton();
+	
+	//função para desabilitar a frma de pagamento paypal
+	function alterarCheckboxCredito(){
+		document.getElementById('checkboxPaypal').checked = false
+	}
+	
+	//função para desabilizar a forma de pagamento credito
+	function alterarCheckboxPaypal(){
+		document.getElementById('checkboxCredito').checked = false
+	}
+	</script>
 </body>
 
 </html>
