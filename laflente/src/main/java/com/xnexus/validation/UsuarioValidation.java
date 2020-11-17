@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import com.xnexus.model.Endereco;
 import com.xnexus.model.UsuarioECommerce;
 
+import br.com.caelum.stella.validation.CPFValidator;
+
 public class UsuarioValidation {
 	public List<String> validarUsuario(UsuarioECommerce usuario, Optional<UsuarioECommerce> emailOptional,
 			Optional<UsuarioECommerce> cpfOptional) {
@@ -34,6 +36,14 @@ public class UsuarioValidation {
 		if (cpfOptional.isPresent()) {
 			erros.add("Usuario com este CPF já existente");
 		}
+		
+		try {
+			CPFValidator validator = new CPFValidator();
+			
+			validator.assertValid(usuario.getCpf());
+		}catch(Exception e) {
+			erros.add("CPF inválido");
+		}
 
 		if (emailOptional.isPresent()) {
 			erros.add("Usuario com este Email já existente");
@@ -46,18 +56,6 @@ public class UsuarioValidation {
 		List<String> erros = new ArrayList<String>();
 
 		String[] nomeSplit = usuario.getNome().split(" ");
-
-		boolean fiscal = false;
-
-		for (Endereco endereco : usuario.getEnderecos()) {
-			if (endereco.isFiscal()) {
-				fiscal = true;
-			}
-		}
-
-		if (!fiscal) {
-			erros.add("Se deve ter no minimo 1 endereço Fiscal.");
-		}
 
 		if (nomeSplit.length < 2) {
 			erros.add("O nome deve no minimo ter duas palavras");

@@ -20,6 +20,14 @@ public class Endereco {
 	private String uf;
 	private String numero;
 	private boolean fiscal;
+	private long idUsuario;
+	
+	public long getIdUsuario() {
+		return idUsuario;
+	}
+	public void setIdUsuario(long idUsuario) {
+		this.idUsuario = idUsuario;
+	}
 	
 	public long getId() {
 		return id;

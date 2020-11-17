@@ -337,9 +337,11 @@
 <script>
 
 	let enderecos = [];
+	let enderecosInseridos = [];
 	let enderecosFormatados = [];
 	let i = 0;
 	let idUsuario = 0;
+	let enderecosRemovidos = [];
 	
 	let inputNome = document.getElementById("nome");
 	let inputCpf = document.getElementById("cpf");
@@ -359,6 +361,15 @@
 	
 	function preencherCampos(){
 		get("http://localhost:3000/usuario").then(usuario => {
+			
+			enderecos = [];
+			enderecosInseridos = [];
+			enderecosFormatados = [];
+			i = 0;
+			idUsuario = 0;
+			enderecosRemovidos = [];
+			
+			
 			inputNome.value = usuario.nome;
 			inputCpf.value = usuario.cpf;
 			inputTelefone.value = usuario.telefone;
@@ -393,8 +404,6 @@
 		let senha = inputSenha.value;
 		let confirmarSenha = inputConfirmarSenha.value;
 		
-		formatarEnderecos();
-		
 		let erros = validar();
 		
 		if(erros.length > 0){
@@ -411,14 +420,58 @@
 				enderecos: enderecosFormatados
 		}
 		
-		remove("http://localhost:3000/usuario/enderecos/"+idUsuario).then(() => {
-			put("http://localhost:3000/usuario", usuario).then(() => {
-				let texto = document.getElementById("erros");
-				
-				texto.innerHTML = "<h3> Usuário Editado Realizado com Sucesso </h3>";
+		removerEnderecos().then(() => {
+			salvarEnderecos().then(() => {
+				put("http://localhost:3000/usuario", usuario).then(() => {
+					let texto = document.getElementById("erros");
+					
+					texto.innerHTML = "<h3> Usuário Editado Realizado com Sucesso </h3>";
+					
+					preencherCampos();
+				})
 			})
 		});
 		
+	}
+	
+	function removerEnderecos(){
+		
+		return new Promise((resolve, reject) => {
+			let promises = [];
+			
+			promises.push(new Promise((resolve, reject) => {
+				enderecosRemovidos.forEach(id => {
+					remove("http://localhost:3000/usuario/enderecos/"+id).then(() => {
+						resolve();
+					});
+				});
+				resolve();
+			}));
+			
+			Promise.all(promises).then(() => resolve());
+			
+		});
+		
+	}
+	
+	function salvarEnderecos(){
+		return new Promise((resolve, reject) => {
+			let promises = [];
+			
+			
+			promises.push(new Promise((resolve, reject) => {
+				formatarEnderecos();
+				enderecosFormatados.forEach(endereco => {
+					post("http://localhost:3000/usuario/enderecos/" + idUsuario,endereco).then(() => {
+						resolve();
+					});
+				});
+				resolve();
+			}));
+			
+			Promise.all(promises).then(() => resolve());
+			
+		});
 	}
 	
 	function exibirErros(erros){
@@ -464,7 +517,7 @@
 	
 		}
 		
-		if(enderecosFormatados.length == 0){
+		if(enderecosFormatados.length == 0 && enderecosInseridos.length == 0){
 			erros.push("Deve se cadastrar no minimo um endereço.");
 		}
 		
@@ -472,10 +525,10 @@
 	}
 	
 	function formatarEnderecos(){
-		for(let i = 0; i < enderecos.length; i++){
+		for(let i = 0; i < enderecosInseridos.length; i++){
 			
 			let fiscal = false;
-			if(enderecos[i].fiscal == "Sim" || enderecos[i].fiscal){
+			if(enderecosInseridos[i].fiscal == "Sim" || enderecosInseridos[i].fiscal){
 				fiscal = true;
 			}
 			
@@ -517,6 +570,7 @@
 			fiscal: fiscal
 		}
 		
+		enderecosInseridos.push(endereco);
 		enderecos.push(endereco);
 		i++;
 		
@@ -577,7 +631,9 @@
 		event.preventDefault();
 		for(let i = 0; i < enderecos.length; i++){
 			if(enderecos[i].id == index){
+				enderecosRemovidos.push(index);
 				let removido = enderecos.splice(i, 1);
+				removido = enderecosInseridos.splice(i, 1);
 				atualizaTabela();
 				return;
 			}
@@ -620,6 +676,28 @@
 
 			let xhr = new XMLHttpRequest();
 			xhr.open("PUT", url, true);
+			xhr.setRequestHeader("Content-type", "application/json");
+			xhr.onreadystatechange = () => {
+
+				if (xhr.readyState == 4) {
+
+					if (xhr.status == 200) {
+						resolve();
+					} else {
+						reject(xhr.responseText);
+					}
+				}
+			};
+
+			xhr.send(JSON.stringify(dados));
+		});
+	}
+	
+	function post(url, dados) {
+		return new Promise((resolve, reject) => {
+
+			let xhr = new XMLHttpRequest();
+			xhr.open("POST", url, true);
 			xhr.setRequestHeader("Content-type", "application/json");
 			xhr.onreadystatechange = () => {
 
