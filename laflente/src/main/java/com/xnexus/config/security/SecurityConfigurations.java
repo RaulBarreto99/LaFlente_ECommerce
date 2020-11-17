@@ -52,11 +52,5 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter{
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**", "/fonts/**", "/scss/**.scss", "/css/**.css", "/js/**", "/img/**");
 	}
-	
-	public static void main(String[] args) {
-		CPFValidator validator = new CPFValidator();
-		
-		validator.assertValid("51943873852");
-	}
 
 }

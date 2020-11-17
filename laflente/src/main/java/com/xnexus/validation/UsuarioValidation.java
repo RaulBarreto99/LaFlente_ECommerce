@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import com.xnexus.model.Endereco;
 import com.xnexus.model.UsuarioECommerce;
 
+import br.com.caelum.stella.validation.CPFValidator;
+
 public class UsuarioValidation {
 	public List<String> validarUsuario(UsuarioECommerce usuario, Optional<UsuarioECommerce> emailOptional,
 			Optional<UsuarioECommerce> cpfOptional) {
@@ -33,6 +35,14 @@ public class UsuarioValidation {
 
 		if (cpfOptional.isPresent()) {
 			erros.add("Usuario com este CPF já existente");
+		}
+		
+		try {
+			CPFValidator validator = new CPFValidator();
+			
+			validator.assertValid(usuario.getCpf());
+		}catch(Exception e) {
+			erros.add("CPF inválido");
 		}
 
 		if (emailOptional.isPresent()) {
