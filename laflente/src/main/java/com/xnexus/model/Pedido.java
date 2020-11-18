@@ -15,13 +15,9 @@ public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
 	@OneToOne(cascade  = {CascadeType.ALL})
 	private Carrinho carrinho;
-	
-	public Pedido() {
-		dataVenda = new Date();
-		status = "Aguardando pagamento";
-	}
 	
 	@OneToOne(cascade  = {CascadeType.ALL})
 	private Endereco enderecoEntrega;
