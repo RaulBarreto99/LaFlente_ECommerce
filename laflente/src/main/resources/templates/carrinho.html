@@ -146,70 +146,23 @@
 		    	</div>
 				</div>
 				
+				<br>
+				
+				<br>
+				<br>
+				<br>
+				
 				
                    
                     
                     
-                    <section class="product_description_area">
-    <div class="container">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item"><a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">Cartão de Crédito</a></li>
-            <li class="nav-item"><a class="nav-link active show" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="true">PayPal</a></li>
-
-        </ul>
-        
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <form>
-            <label class="labelCartao" style="margin-left: 10rem; margin-right: 1rem;">Numero do cartão</label><input class="NumeroCartao" type="text" maxlength="16" size="16" style="border-radius: 5px">
-            <label class="labelCartao" style="margin-left: 10rem; margin-right: 1rem;">Código verificador</label><input class="inputCartao" type="text" maxlength="3" size="1" style="border-radius: 5px">
-            
-          
-            <br>
-            
-            <div style="margin-top: 1rem;">
-            <label class="labelCartao" style="margin-left: 10rem; margin-right: 1rem;">Data de vencimento</label><input class="inputCartao" type="month" style="border-radius: 5px">
-            <label class="labelCartao" style="margin-left: 10rem; margin-right: 1rem;">Quantidade de parcelas</label>
-            
-			<!--CSS para posicionar corretamente foi colocado na classe main.css -->
-			<select name="example">
-			  <option value="1">1x</option>
-			  <option value="3">3x</option>
-			  <option value="6">6x</option>
-			  <option value="9">9x</option>
-			  <option value="12">12x</option>
-			</select>
-            </div>
-            
-            <div>
-            	<input type="checkbox" id="checkboxCredito" class="checkboxCredito" onclick="alterarCheckboxCredito()"><a>Selecionar forma de pagamento</a>
-            </div>
-            </form>
-            </div>
-        
-            <div class="tab-pane fade active show" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-				
-			<div id="smart-button-container">
-			    <div style="text-align: center;">
-			      <div id="paypal-button-container"></div>
-			    </div>
-			 </div>
-			 
-			 <div>
-            	<input type="checkbox" id="checkboxPaypal" class="checkboxPaypal" onclick="alterarCheckboxPaypal()"><a>Selecionar forma de pagamento</a>
-            </div>
-				
-            </div>
-            
-		</div>
-		</div>
-		</section>
+                    
 		
 		<div class="out_button_area">
 		    <div>
 		        <div class="checkout_btn_inner d-flex align-items-center">
 		            <a class="gray_btn" href="/produtos">Continuar Comprando</a>
-		            <a class="primary-btn" href="/compra">Prosseguir Compra</a>
+		            <a class="primary-btn ml-4" href="/compra">Prosseguir Compra</a>
 		        </div>
 		    </div>
 		</div>
@@ -242,7 +195,7 @@
 	<script src="https://www.paypal.com/sdk/js?client-id=sb&currency=BRL" data-sdk-integration-source="button-factory"></script>
 	<script>
 	
-	
+	let produtos= [];
 	
 	//função para chamar a pagina do paypal
 	  function initPayPalButton() {
@@ -300,7 +253,7 @@
 			let codigo = carrinho.itens[i].codigoProduto;
 			let quantidade = carrinho.itens[i].quantidade;
 			get("http://localhost:3000/carrinho-rest/"+ codigo).then(produto => {
-					
+					produtos.push(produto);
 					//
 					let totalProduto = produto.preco * carrinho.itens[i].quantidade;
 					
@@ -377,26 +330,34 @@
         });
     }
 	function recalcularPreco(){
-		let carrinho = localStorage.getItem("carrinho");
-		
-		carrinho = JSON.parse(carrinho);
-		for(let i = 0; i < carrinho.itens.length; i++){
-			
-			let quantidade = document.getElementById("quantidade" + carrinho.itens[i].codigoProduto).value
-			
-			carrinho.itens[i].quantidade = parseInt(carrinho.itens[i].quantidade);
+        let carrinho = localStorage.getItem("carrinho");
 
-			carrinho.itens[i].quantidade = parseInt(quantidade);
-			
-			localStorage.setItem("carrinho", JSON.stringify(carrinho));
-			
-			
-			
-			
-		}
-		atualizarTabelaCarrinho()
-		
-	}
+        carrinho = JSON.parse(carrinho);
+
+
+
+        for(let i = 0; i < carrinho.itens.length; i++){
+
+            let quantidade = document.getElementById("quantidade" + carrinho.itens[i].codigoProduto).value
+
+            carrinho.itens[i].quantidade = parseInt(carrinho.itens[i].quantidade);
+
+            carrinho.itens[i].quantidade = parseInt(quantidade);
+
+        }
+        for(let i = 0; i < carrinho.itens.length; i++){
+            let quantidade = document.getElementById("quantidade" + carrinho.itens[i].codigoProduto).value
+
+            if(carrinho.itens[i].quantidade == quantidade){
+                let removido = carrinho.itens.splice(i, 1);
+
+            }
+        }
+        localStorage.setItem("carrinho", JSON.stringify(carrinho));
+        atualizarTabelaCarrinho()
+
+    }
+
 	
 	getUsername("http://localhost:3000/usuario/username").then(username => {
 		console.log(username)
@@ -435,6 +396,14 @@
 
 			xhr.send();
 		});
+	}
+	function criarResumo(){
+		
+		localStorage.setItem("resumo", JSON.stringify(produtos));
+		
+		window.location.replace("http://localhost:3000/compra");
+		
+		
 	}
 	
 	
