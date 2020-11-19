@@ -75,7 +75,7 @@ public class PedidosRestController {
 	
 	@Transactional
 	@PostMapping
-	public ResponseEntity<?> cadastraPedido(@RequestBody Pedido pedido){
+	public Long cadastraPedido(@RequestBody Pedido pedido){
 		
 		double valorTotal = 0;
 		for (ItemCarrinho item : pedido.getCarrinho().getItens()) {
@@ -117,6 +117,8 @@ public class PedidosRestController {
 		
 		repository.flush();
 		
-		return ResponseEntity.created(null).build();
+		System.out.println(pedido.getId());
+		
+		return pedido.getId();
 	}
 }

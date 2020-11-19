@@ -476,7 +476,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
                 if (xhr.readyState == 4) {
 
-                    if (xhr.status == 201) {
+                    if (xhr.status == 200) {
                        resolve(xhr.responseText);
                     } else {
                         reject(xhr.responseText);
@@ -526,7 +526,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	function finalizarCompra(){
 		
 		event.preventDefault();
-
+		
+		
 		let carrinho = localStorage.getItem("carrinho");
 		
 		carrinho = JSON.parse(carrinho);
@@ -577,10 +578,12 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         };
 		
 		
-
+	
         console.log(pedido)
 		post("http://localhost:3000/pedidos", pedido).then(pedido => {
-			window.location.replace("http://localhost:3000/sucesso");
+				localStorage.removeItem("carrinho");
+				window.location.replace("http://localhost:3000/sucesso/" + pedido);
+				
                
             });
 		
