@@ -18,6 +18,8 @@ public class FormaPagamento {
 	
 	private String dtVencimento;
 	
+	private String tipo;
+	
 	private long parcelas;
 
 	public long getId() {
@@ -59,6 +61,15 @@ public class FormaPagamento {
 	public void setParcelas(long parcelas) {
 		this.parcelas = parcelas;
 	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+	
 	
 	
 }

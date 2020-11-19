@@ -2,14 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="131f9eb7-3c16-498a-84db-857d6e01ddd1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/laflente/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/laflente/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laflente/src/main/java/com/xnexus/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/laflente/src/main/java/com/xnexus/controller/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laflente/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/laflente/src/main/resources/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laflente/src/main/java/com/xnexus/controller/RestController/PedidosRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/laflente/src/main/java/com/xnexus/controller/RestController/PedidosRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laflente/src/main/java/com/xnexus/model/FormaPagamento.java" beforeDir="false" afterPath="$PROJECT_DIR$/laflente/src/main/java/com/xnexus/model/FormaPagamento.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laflente/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/laflente/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1jrBk3ngJjDTvlol0yriiGNibua" />
   <component name="ProjectViewState">

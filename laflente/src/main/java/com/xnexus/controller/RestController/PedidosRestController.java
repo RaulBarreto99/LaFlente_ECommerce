@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.xnexus.model.Endereco;
 import com.xnexus.model.ItemCarrinho;
 import com.xnexus.model.Pedido;
 import com.xnexus.model.Produto;
 import com.xnexus.model.UsuarioECommerce;
+import com.xnexus.repository.EnderecoRepository;
 import com.xnexus.repository.PedidoRepository;
 import com.xnexus.repository.ProdutoRepository;
 import com.xnexus.repository.UsuarioRepository;
@@ -36,6 +38,9 @@ public class PedidosRestController {
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 	
 	@GetMapping
 	public List<Pedido> getPedidos(){
@@ -58,6 +63,14 @@ public class PedidosRestController {
 			
 		}
 		
+		Optional<Endereco> optional = enderecoRepository.findById(pedido.getEnderecoEntrega().getId());
+		
+		if(optional.isPresent()) {
+			
+			Endereco endereco = optional.get();
+			pedido.setEnderecoEntrega(endereco);
+		}
+		
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		String email;
@@ -75,6 +88,8 @@ public class PedidosRestController {
 		pedido.setValorTotal(valorTotal);
 		pedido.setStatus("Aguardando pagamento");
 		repository.save(pedido);
+		
+		repository.flush();
 		
 		return ResponseEntity.created(null).build();
 	}
