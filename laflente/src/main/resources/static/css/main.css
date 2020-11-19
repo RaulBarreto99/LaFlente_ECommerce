@@ -5795,9 +5795,14 @@ label {
 /* posicionamento select de parcelas */
 .nice-select {
 		float : right !important;
-		margin-right : 139px;
+		margin-right : 280px;
 	}
 .subTotal{
 	float : right !important;
 	
 }
+.country_select{
+	margin-right:0px;
+}
+
+
