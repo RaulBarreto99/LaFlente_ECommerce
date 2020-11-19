@@ -149,18 +149,18 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
             <form>
-            <label class="labelCartao" style="margin-left: 10rem; margin-right: 1rem;">Número do cartão</label><input class="NumeroCartao" type="text" maxlength="16" size="16" style="border-radius: 5px">
+            <label id = "numeroCartao"class="labelCartao" style="margin-left: 10rem; margin-right: 1rem;">Número do cartão</label><input class="NumeroCartao" type="text" maxlength="16" size="16" style="border-radius: 5px">
             <br>
             <br>
            
-            <label class="labelCartao" style="margin-left: 10rem; margin-right: 1rem;">CVV</label><input class="inputCartao" type="text" maxlength="3" size="1" style="border-radius: 5px">
+            <label id = "cvv"class="labelCartao" style="margin-left: 10rem; margin-right: 1rem;">CVV</label><input class="inputCartao" type="text" maxlength="3" size="1" style="border-radius: 5px">
       		<br>
             
             <div style="margin-top: 1rem;">
-            <label class="labelCartao" style="margin-left: 10rem; margin-right: 1rem;">Data de vencimento</label><input class="inputCartao" type="month" style="border-radius: 5px">
+            <label id = "dataVencimento"class="labelCartao" style="margin-left: 10rem; margin-right: 1rem;">Data de vencimento</label><input class="inputCartao" type="month" style="border-radius: 5px">
             <br>
             <br>
-            <label class="labelCartao" style="margin-left: 10rem; margin-right: 1rem;">Quantidade de parcelas</label>
+            <label id = "quantidadeParcelas"class="labelCartao" style="margin-left: 10rem; margin-right: 1rem;">Quantidade de parcelas</label>
             
 			<!--CSS para posicionar corretamente foi colocado na classe main.css -->
 			<select name="example">
@@ -377,12 +377,12 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 			
 			for(let i = 0; i < enderecos.length; i++){
 				
-				optionals[i] = `<option value="${i}">${enderecos[i].logradouro}, ${enderecos[i].numero} </option>`;
+				optionals[i] = `<option value="${enderecos[i].id}">${enderecos[i].logradouro}, ${enderecos[i].numero} </option>`;
 				
 			}
 			inputEndereco.insertAdjacentHTML("beforeend", 
 					
-			`<select class="country_select">
+			`<select class="country_select" id = "optionals">
 					${optionals}
 					
 		             
@@ -503,8 +503,71 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 	}
 	function finalizarCompra(){
-		window.location.replace("http://localhost:3000/sucesso");
+		get("http://localhost:3000/usuario").then(usuario => {
+		event.preventDefault();
+
+		let carrinho = localStorage.getItem("carrinho");
+		
+		idUsuario = 0;
+		
+		idUsuario = usuario.id;
+		
+		let optionals = document.getElementById("optionals");
+		
+		let enderecoEntrega = {id:optionals.value}
+		
+		let formaPagamentoEscolhido = "";
+		let formaPagamentoPayPal = document.getElementById('checkboxPaypal');
+		let formaPagamentoCredito = document.getElementById('checkboxCredito');
+		
+		let numeroCartao = document.getElementById('numeroCartao');
+		let cvv = document.getElementById('cvv');
+		let dataVencimento = document.getElementById('dataVencimento');
+		let quantidadeParcelas = document.getElementById('quantidadeParcelas');
+		
+		
+		
+		let formaPagamento = {};
+		
+		if(formaPagamentoPayPal.checked =true){
+			formaPagamento ={
+				tipo: 'PayPal'
+				
+				
+			}
+			
+		}else if(formaPagamentoCredito.checked =true){
+			formaPagamento = {
+				numeroCartao:numeroCartao.value,
+				cvv:cvv.value,
+				dataVencimento:dataVencimento.value,
+				quantidadeParcelas:quantidadeParcelas.value
+				
+				
+			}
+		
+		}
+		
+		let pedido = {
+            carrinho: carrinho.value,
+            idUsuario: idUsuario.value,
+            enderecoEntrega: enderecoEntrega.value,
+            formaPagamento: formaPagamento
+		
+        };
+		
+		
+
+        
+		post("http://localhost:3000/pedidos", pedido).then(pedido => {
+			window.location.replace("http://localhost:3000/sucesso");
+               
+            });
+		
+		
+        });
 	}
+	
 	
 	</script>
 	
