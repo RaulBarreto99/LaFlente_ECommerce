@@ -15,7 +15,7 @@
     <!-- meta character set -->
     <meta charset="UTF-8">
     <!-- Site Title -->
-    <title>Karma Shop</title>
+    <title>LaFlente</title>
 
     <!--
             CSS
@@ -149,21 +149,21 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
             <form>
-            <label id = "numeroCartao"class="labelCartao" style="margin-left: 10rem; margin-right: 1rem;">Número do cartão</label><input class="NumeroCartao" type="text" maxlength="16" size="16" style="border-radius: 5px">
+            <label class="labelCartao" style="margin-left: 10rem; margin-right: 1rem;">Número do cartão</label><input id = "numeroCartao" class="NumeroCartao" type="text" maxlength="16" size="16" style="border-radius: 5px">
             <br>
             <br>
            
-            <label id = "cvv"class="labelCartao" style="margin-left: 10rem; margin-right: 1rem;">CVV</label><input class="inputCartao" type="text" maxlength="3" size="1" style="border-radius: 5px">
+            <label class="labelCartao" style="margin-left: 10rem; margin-right: 1rem;">CVV</label><input id = "cvv" class="inputCartao" type="text" maxlength="3" size="1" style="border-radius: 5px">
       		<br>
             
             <div style="margin-top: 1rem;">
-            <label id = "dataVencimento"class="labelCartao" style="margin-left: 10rem; margin-right: 1rem;">Data de vencimento</label><input class="inputCartao" type="month" style="border-radius: 5px">
+            <label class="labelCartao" style="margin-left: 10rem; margin-right: 1rem;">Data de vencimento</label><input id = "dataVencimento" class="inputCartao" type="month" style="border-radius: 5px">
             <br>
             <br>
-            <label id = "quantidadeParcelas"class="labelCartao" style="margin-left: 10rem; margin-right: 1rem;">Quantidade de parcelas</label>
+            <label class="labelCartao" style="margin-left: 10rem; margin-right: 1rem;">Quantidade de parcelas</label>
             
 			<!--CSS para posicionar corretamente foi colocado na classe main.css -->
-			<select name="example">
+			<select name="example" id = "quantidadeParcelas">
 			  <option value="1">1x</option>
 			  <option value="3">3x</option>
 			  <option value="6">6x</option>
@@ -466,6 +466,27 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 			xhr.send();
 		});
 	}
+	function post(url, dados) {
+        return new Promise((resolve, reject) => {
+
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-type", "application/json");
+            xhr.onreadystatechange = () => {
+
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status == 201) {
+                       resolve(xhr.responseText);
+                    } else {
+                        reject(xhr.responseText);
+                    }
+                }
+            };
+
+            xhr.send(JSON.stringify(dados));
+        });
+    }
 	function atualizarTabelaCarrinho(){
 		let carrinho = localStorage.getItem("carrinho");
 		
@@ -503,14 +524,14 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 	}
 	function finalizarCompra(){
-		get("http://localhost:3000/usuario").then(usuario => {
+		
 		event.preventDefault();
 
 		let carrinho = localStorage.getItem("carrinho");
 		
-		idUsuario = 0;
+		carrinho = JSON.parse(carrinho);
 		
-		idUsuario = usuario.id;
+		
 		
 		let optionals = document.getElementById("optionals");
 		
@@ -529,14 +550,14 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		
 		let formaPagamento = {};
 		
-		if(formaPagamentoPayPal.checked =true){
+		if(formaPagamentoPayPal.checked ==true){
 			formaPagamento ={
 				tipo: 'PayPal'
 				
 				
 			}
 			
-		}else if(formaPagamentoCredito.checked =true){
+		}else if(formaPagamentoCredito.checked ==true){
 			formaPagamento = {
 				numeroCartao:numeroCartao.value,
 				cvv:cvv.value,
@@ -549,23 +570,22 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		}
 		
 		let pedido = {
-            carrinho: carrinho.value,
-            idUsuario: idUsuario.value,
-            enderecoEntrega: enderecoEntrega.value,
+            carrinho: carrinho,
+            enderecoEntrega: enderecoEntrega,
             formaPagamento: formaPagamento
 		
         };
 		
 		
 
-        
+        console.log(pedido)
 		post("http://localhost:3000/pedidos", pedido).then(pedido => {
 			window.location.replace("http://localhost:3000/sucesso");
                
             });
 		
 		
-        });
+        
 	}
 	
 	
