@@ -22,8 +22,6 @@ public class Controller {
 		} else {
 			nome = principal.toString();
 		}
-		
-		System.out.println(nome);
 
 		ModelAndView mv = new ModelAndView("index.html");
 

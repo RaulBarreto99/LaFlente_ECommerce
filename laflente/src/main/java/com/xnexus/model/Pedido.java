@@ -2,6 +2,7 @@ package com.xnexus.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,16 +15,14 @@ public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
+	@OneToOne(cascade  = {CascadeType.ALL})
 	private Carrinho carrinho;
 	
-	public Pedido() {
-		dataVenda = new Date();
-		status = "Aguardando pagamento";
-	}
-	
-	@OneToOne
+	@OneToOne(cascade  = {CascadeType.ALL})
 	private Endereco enderecoEntrega;
 	private long idUsuario;
+	@OneToOne(cascade  = {CascadeType.ALL})
 	private FormaPagamento formaPagamento;
 	private Date dataVenda;
 	private double valorTotal;
