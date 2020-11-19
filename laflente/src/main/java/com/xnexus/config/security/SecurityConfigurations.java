@@ -39,8 +39,6 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter{
 		.antMatchers("/produto/**").permitAll()
 		.antMatchers("/usuario/username").permitAll()
 		.antMatchers("/index").permitAll()
-		.antMatchers("/pedidos").permitAll()
-		.antMatchers("/compra").permitAll()
 		.antMatchers("/detalharProduto/**").permitAll()
 		.antMatchers("/detalharProduto").permitAll()
 		.antMatchers("/carrinho-rest/**").permitAll()

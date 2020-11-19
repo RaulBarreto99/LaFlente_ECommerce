@@ -182,7 +182,7 @@
 			}else{
 				document.getElementById("menu_dinamico").innerHTML = 
 					`<li class="nav-item"><a class="nav-link" href="/editarConta">Editar Conta</a></li>
-					<li class="nav-item"><a class="nav-link" href="/pedidos"> Meus Pedidos</a></li>`
+					<li class="nav-item"><a class="nav-link" href="/meus-pedidos"> Meus Pedidos</a></li>`
 			}
 		});
 		
@@ -270,7 +270,7 @@
 					if(carrinho.itens[i].codigoProduto == item.codigoProduto){
 						carrinho.itens[i].quantidade = parseInt(carrinho.itens[i].quantidade);
 
-						carrinho.itens[i].quantidade += parseInt(item.quantidade);
+						carrinho.itens[i].quantidade += parseInt(1);
 						localStorage.setItem("carrinho", JSON.stringify(carrinho));
 						
 						let acao = document.getElementById("acao");

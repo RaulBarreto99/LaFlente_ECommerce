@@ -62,11 +62,12 @@
 
 							<li class="nav-item submenu dropdown"><a href="#"
 								class="nav-link dropdown-toggle" data-toggle="dropdown"
-								role="button" aria-haspopup="true" aria-expanded="false">Login</a>
-								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+								role="button" aria-haspopup="true" aria-expanded="false">Meu
+									Perfil</a>
+								<ul class="dropdown-menu" id="menu_dinamico">
 
-								</ul></li>
+
+								</ul>
 							<li class="nav-item"><a class="nav-link" href="/contato">Contato</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
@@ -118,14 +119,17 @@
 				<div id="erros"></div>
 				<form class="row contact_form" novalidate="novalidate">
 					<div class="col-md-12 form-group p_star">
-						<input type="text" class="form-control" id="nome" name="name" placeholder="Nome Completo*">
+						<input type="text" class="form-control" id="nome" name="name"
+							placeholder="Nome Completo*">
 					</div>
 
 					<div class="col-md-6 form-group p_star">
-						<input type="text" class="form-control" id="telefone" name="number" placeholder="Telefone">
+						<input type="text" class="form-control" id="telefone"
+							name="number" placeholder="Telefone">
 					</div>
 					<div class="col-md-6 form-group p_star">
-						<input type="text" class="form-control" id="cpf" name="number" placeholder="CPF*">
+						<input type="text" class="form-control" id="cpf" name="number"
+							placeholder="CPF*">
 					</div>
 					<div class="col-md-12 form-group p_star">
 						<input type="email" class="form-control" id="email"
@@ -136,10 +140,10 @@
 						<input type="password" class="form-control" id="senha"
 							name="compemailany" placeholder="Senha*">
 					</div>
-					
+
 					<div class="col-md-6 form-group p_star">
 						<input type="password" class="form-control" id="confirmarSenha"
-							 placeholder="Confirmar Senha*">
+							placeholder="Confirmar Senha*">
 					</div>
 
 				</form>
@@ -149,25 +153,32 @@
 				<p id="texto" style="color: red;"></p>
 				<hr>
 				<form class="row contact_form">
-					
+
 					<br>
 					<div class="col-md-3 form-group p_star">
-						<input type="text" class="form-control" id="cep" name="number" placeholder="CEP*">
+						<input type="text" class="form-control" id="cep" name="number"
+							placeholder="CEP*">
 					</div>
 					<div class="col-md-3 form-group p_star">
-						<button class="click-btn btn btn-default" onclick="buscarCep()"><i class="fa fa-search" aria-hidden="true"></i></button>
+						<button class="click-btn btn btn-default" onclick="buscarCep()">
+							<i class="fa fa-search" aria-hidden="true"></i>
+						</button>
 					</div>
 					<div class="col-md-12 form-group p_star">
-						<input type="text" class="form-control" id="logradouro" name="logradouro" placeholder="Logradouro*">
+						<input type="text" class="form-control" id="logradouro"
+							name="logradouro" placeholder="Logradouro*">
 					</div>
 					<div class="col-md-12 form-group p_star">
-						<input type="text" class="form-control" id="complemento" name="complemento" placeholder="Complemento">
+						<input type="text" class="form-control" id="complemento"
+							name="complemento" placeholder="Complemento">
 					</div>
 					<div class="col-md-12 form-group p_star">
-						<input type="text" class="form-control" id="bairro" name="bairro" placeholder="Bairro*">
+						<input type="text" class="form-control" id="bairro" name="bairro"
+							placeholder="Bairro*">
 					</div>
 					<div class="col-md-12 form-group p_star">
-						<input type="text" class="form-control" id="cidade" name="cidade" placeholder="Cidade*">
+						<input type="text" class="form-control" id="cidade" name="cidade"
+							placeholder="Cidade*">
 					</div>
 					<div class="col-md-2 form-group">
 						<input type="text" class="form-control" id="uf" name="uf"
@@ -178,46 +189,49 @@
 							placeholder="Número*">
 					</div>
 					<div class="col-md-3 form-group">
-						<input type="checkbox" class="form-check-input" id="enderecoFiscal">
-    					<label class="form-check-label" for="enderecoFiscal">Endereço Fiscal</label>
+						<input type="checkbox" class="form-check-input"
+							id="enderecoFiscal"> <label class="form-check-label"
+							for="enderecoFiscal">Endereço Fiscal</label>
 					</div>
 					<div class="col-md-12 form-group p_star">
-					
-						<div class="add-bag d-flex align-items-center" style="float: right;">
-							<button class="add-btn" id="salvarEndereco" onclick="addEndereco()" style="cursor: pointer"><span class="lnr lnr-cross"></span></button>
-							<span class="add-text text-uppercase" for="salvarEndereco">Adicionar Endereço</span>
+
+						<div class="add-bag d-flex align-items-center"
+							style="float: right;">
+							<button class="add-btn" id="salvarEndereco"
+								onclick="addEndereco()" style="cursor: pointer">
+								<span class="lnr lnr-cross"></span>
+							</button>
+							<span class="add-text text-uppercase" for="salvarEndereco">Adicionar
+								Endereço</span>
 						</div>
 					</div>
 				</form>
 			</div>
-			<br>
-			<br>
-			<br>
+			<br> <br> <br>
 			<h3>Endereços Salvos</h3>
 			<br>
 			<table class="table">
-					<thead>
-						<th> CEP </th>
-						<th> Logradouro </th>
-						<th> Complemento </th>
-						<th> Bairro </th>
-						<th> Cidade </th>
-						<th> UF </th>
-						<th> Nº </th>
-						<th> Fiscal? </th>
-						<th> Remover </th>
-					</thead>
-					
-					<tbody id="tabela">
-					
-					</tbody>
-				</table>
-				<br>
-			<br>
-			<br>
-				<div class="col-md-12 form-group">
-					<button type="button" onclick="cadastrarUsuario()" class="primary-btn">Salvar Perfil</button>
-				</div>
+				<thead>
+					<th>CEP</th>
+					<th>Logradouro</th>
+					<th>Complemento</th>
+					<th>Bairro</th>
+					<th>Cidade</th>
+					<th>UF</th>
+					<th>Nº</th>
+					<th>Fiscal?</th>
+					<th>Remover</th>
+				</thead>
+
+				<tbody id="tabela">
+
+				</tbody>
+			</table>
+			<br> <br> <br>
+			<div class="col-md-12 form-group">
+				<button type="button" onclick="cadastrarUsuario()"
+					class="primary-btn">Salvar Perfil</button>
+			</div>
 		</div>
 	</section>
 	<!--================End Checkout Area =================-->
@@ -354,6 +368,46 @@
 	let inputUf = document.getElementById("uf");
 	let inputNumero = document.getElementById("numero");
 	let inputEnderecoFiscal = document.getElementById("enderecoFiscal");
+	
+	getUsername("http://localhost:3000/usuario/username").then(username => {
+        console.log(username)
+        if(username == "anonymousUser"){
+            document.getElementById("menu_dinamico").innerHTML =` 
+                <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="/criarConta"> Criar Conta</a></li>`
+        } else{
+            document.getElementById("menu_dinamico").innerHTML =` 
+                <li class="nav-item"><a class="nav-link" href="/editarConta">Editar Conta</a></li>
+                <li class="nav-item"><a class="nav-link" href="/meus-pedidos"> Meus Pedidos</a></li>`
+        }
+        
+    });
+
+function getUsername(url) {
+    return new Promise((resolve, reject) => {
+
+        let xhr = new XMLHttpRequest();
+
+        xhr.open('GET', url);
+
+        xhr.onreadystatechange = () => {
+
+            if (xhr.readyState == 4) {
+
+                if (xhr.status == 200) {
+
+                    resolve(xhr.responseText);
+
+                } else {
+
+                    reject(xhr.responseText);
+                }
+            }
+        }
+
+        xhr.send();
+    });
+}
 
 	function buscarCep(){
 		event.preventDefault()

@@ -345,16 +345,18 @@
             carrinho.itens[i].quantidade = parseInt(quantidade);
 
         }
+        
+        
         for(let i = 0; i < carrinho.itens.length; i++){
             let quantidade = document.getElementById("quantidade" + carrinho.itens[i].codigoProduto).value
 
-            if(carrinho.itens[i].quantidade == quantidade){
+            if(quantidade == 0){
                 let removido = carrinho.itens.splice(i, 1);
 
             }
         }
         localStorage.setItem("carrinho", JSON.stringify(carrinho));
-        atualizarTabelaCarrinho()
+        atualizarTabelaCarrinho();
 
     }
 
@@ -368,7 +370,7 @@
 		}else{
 			document.getElementById("menu_dinamico").innerHTML = 
 				`<li class="nav-item"><a class="nav-link" href="/editarConta">Editar Conta</a></li>
-				<li class="nav-item"><a class="nav-link" href="/pedidos"> Meus Pedidos</a></li>`
+				<li class="nav-item"><a class="nav-link" href="/meus-pedidos"> Meus Pedidos</a></li>`
 		}
 	});
 	

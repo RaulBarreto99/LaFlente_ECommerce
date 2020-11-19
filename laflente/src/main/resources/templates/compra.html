@@ -320,7 +320,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	        } else{
 	            document.getElementById("menu_dinamico").innerHTML =` 
 	                <li class="nav-item"><a class="nav-link" href="/editarConta">Editar Conta</a></li>
-	                <li class="nav-item"><a class="nav-link" href="/pedidos"> Meus Pedidos</a></li>`
+	                <li class="nav-item"><a class="nav-link" href="/meus-pedidos"> Meus Pedidos</a></li>`
 	        }
 	        
 	    });
@@ -562,8 +562,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 				numeroCartao:numeroCartao.value,
 				cvv:cvv.value,
 				dataVencimento:dataVencimento.value,
-				quantidadeParcelas:quantidadeParcelas.value
-				
+				quantidadeParcelas:quantidadeParcelas.value,
+				tipo: "Crédito"
 				
 			}
 		

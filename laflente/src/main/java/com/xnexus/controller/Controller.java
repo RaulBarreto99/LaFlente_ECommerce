@@ -60,8 +60,26 @@ public class Controller {
 	@RequestMapping("/criarConta")
 	@GetMapping
 	public ModelAndView criarConta() {
-		ModelAndView mv = new ModelAndView("criarConta.html");
-		return mv;
+		
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		String nome;
+
+		if (principal instanceof UserDetails) {
+			nome = ((UserDetails) principal).getUsername();
+		} else {
+			nome = principal.toString();
+		}
+		
+		if(nome.equals("anonymousUser")) {
+			ModelAndView mv = new ModelAndView("criarConta.html");
+			return mv;
+		}else {
+			ModelAndView mv = new ModelAndView("editarConta.html");
+			return mv;
+		}
+		
+		
 	}
 
 	@RequestMapping("/editarConta")
@@ -82,6 +100,20 @@ public class Controller {
 	@GetMapping
 	public ModelAndView compra() {
 		ModelAndView mv = new ModelAndView("compra.html");
+		return mv;
+	}
+	
+	@RequestMapping("/meus-pedidos")
+	@GetMapping
+	public ModelAndView pedidos() {
+		ModelAndView mv = new ModelAndView("pedidos.html");
+		return mv;
+	}
+	
+	@RequestMapping("/detalharPedido/{id}")
+	@GetMapping
+	public ModelAndView detalharPedido(@PathVariable Long id) {
+		ModelAndView mv = new ModelAndView("detalharPedido.html");
 		return mv;
 	}
 

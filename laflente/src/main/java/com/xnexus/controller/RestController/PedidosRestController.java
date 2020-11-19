@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +45,32 @@ public class PedidosRestController {
 	
 	@GetMapping
 	public List<Pedido> getPedidos(){
-		return repository.findAll();
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		String email;
+
+		if (principal instanceof UserDetails) {
+			email = ((UserDetails) principal).getUsername();
+		} else {
+			email = principal.toString();
+		}
+		
+		UsuarioECommerce usuario = usuarioRepository.findByEmail(email).get();
+		
+		return repository.findByIdUsuario(usuario.getId());
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<?> getPedidoById(@PathVariable Long id){
+		Optional<Pedido> optional = repository.findById(id);
+		
+		if(optional.isPresent()) {
+			Pedido pedido = optional.get();
+			
+			return ResponseEntity.ok(pedido);
+		}
+		
+		return ResponseEntity.notFound().build();
 	}
 	
 	@Transactional

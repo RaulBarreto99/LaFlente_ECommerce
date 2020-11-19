@@ -59,11 +59,11 @@
 							
 							<li class="nav-item submenu dropdown">
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-								 aria-expanded="false">Login</a>
-								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                                 aria-expanded="false">Meu Perfil</a>
+                                <ul class="dropdown-menu" id="menu_dinamico">
 
-								</ul>
+
+                                </ul>
 							</li>
 							<li class="nav-item"><a class="nav-link" href="/contato">Contato</a></li>
 						</ul>
@@ -699,6 +699,48 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		</div>
 	</div>
 
+
+<script>
+getUsername("http://localhost:3000/usuario/username").then(username => {
+    console.log(username)
+    if(username == "anonymousUser"){
+        document.getElementById("menu_dinamico").innerHTML =` 
+            <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="/criarConta"> Criar Conta</a></li>`
+    } else{
+        document.getElementById("menu_dinamico").innerHTML =` 
+            <li class="nav-item"><a class="nav-link" href="/editarConta">Editar Conta</a></li>
+            <li class="nav-item"><a class="nav-link" href="/meus-pedidos"> Meus Pedidos</a></li>`
+    }
+    
+});
+
+function getUsername(url) {
+return new Promise((resolve, reject) => {
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open('GET', url);
+
+    xhr.onreadystatechange = () => {
+
+        if (xhr.readyState == 4) {
+
+            if (xhr.status == 200) {
+
+                resolve(xhr.responseText);
+
+            } else {
+
+                reject(xhr.responseText);
+            }
+        }
+    }
+
+    xhr.send();
+});
+}
+</script>
 
 
 	<script src="js/vendor/jquery-2.2.4.min.js"></script>
